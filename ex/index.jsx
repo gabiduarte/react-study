@@ -2,4 +2,4 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ClassComponent from './classComponent'
 
-ReactDOM.render(<ClassComponent/>, document.getElementById('app'))
+ReactDOM.render(<ClassComponent initialValue={10}/>, document.getElementById('app'))
