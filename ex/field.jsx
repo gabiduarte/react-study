@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-export default class FieldComponent extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { value: this.props.initialValue }
-        this.handleChanges = this.handleChanges.bind(this); // need to set the context of this to the class
-    }
 
-    handleChanges(event) {
-        this.setState({value: event.target.value})
-    }
-
+class Field extends Component {
     render() {
         return (
             <div>
-                <h1>{this.state.value}</h1>
-                <input onChange={this.handleChanges} value={this.state.value} type="text"/>
+                <h1>{this.props.value}</h1> 
+                <input onChange={this.handleChanges} value={this.props.value} type="text"/>
             </div>
         )
     }
+    //props agora tem acesso ao valor do reducer de field
 }
+
+function mapStateToProps(state) { //mapear os atributos do store pro props do componente. Abandona o uso do this.state, pra usar o state global (do redux). 
+    return {
+        value: state.field.value //state (redux) - field (dentro do reducers) - value (propriedade dentro do field reducer)
+    }
+}
+
+//padrão decorator
+export default connect(mapStateToProps)(Field) //agora o que tá sendo exportado da classe é o método do react-redux que chama o mapStateToProps e passa a classe Field como parametro
