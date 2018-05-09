@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { changeValue } from './fieldActions'
 
 
 class Field extends Component {
@@ -7,7 +9,7 @@ class Field extends Component {
         return (
             <div>
                 <h1>{this.props.value}</h1> 
-                <input onChange={this.handleChanges} value={this.props.value} type="text"/>
+                <input onChange={this.props.changeValue} value={this.props.value} type="text"/>
             </div>
         )
     }
@@ -20,5 +22,9 @@ function mapStateToProps(state) { //mapear os atributos do store pro props do co
     }
 }
 
-//padrão decorator
-export default connect(mapStateToProps)(Field) //agora o que tá sendo exportado da classe é o método do react-redux que chama o mapStateToProps e passa a classe Field como parametro
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({changeValue}, dispatch)
+}
+
+//padrão decorator - connect ensina como jogar parte do estado dentro das props do component
+export default connect(mapStateToProps, mapDispatchToProps)(Field) //agora o que tá sendo exportado da classe é o método do react-redux que chama o mapStateToProps e passa a classe Field como parametro
